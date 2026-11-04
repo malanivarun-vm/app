@@ -43,6 +43,10 @@ Build a single-page portfolio for Varun Malani, a product manager in Bangalore, 
 - WhatsApp Digest Agent added to the cockpit switch panel (PERSONAL BUILD, no link).
 - Motion polish: lenis momentum scrolling with the 3D stage exempt (data-lenis-prevent, reduced-motion skips), footer scroll-reveal, pointer-driven title drift (fine pointers only).
 
+## Implemented (2026-11-04, bug-fix round)
+- Runtime crash fix: React/react-dom upgraded 19.0.0 → 19.3.1. The reported "Blocked a frame … cross-origin frame" came from React 19.0's dev component-stack serializer walking a prop object handed in by the platform overlay inside the preview iframe; the escaping exception then corrupted the work loop ("Should not already be working."). React 19.3.1 hardens both paths. Frontend restarted; testing_agent verified both errors gone across desktop (1440x900) and the user's 762x803 preview-iframe viewport with all flows exercised and zero page errors.
+- Startup sound rewritten to a V12 character: short starter whirr, catch thump + backfire, harmonic stack (1x/2x/3x/4x) through a waveshaper with rpm sweep 70→640 Hz fundamental and bright lowpass opening to 5.2 kHz at redline, firing-roughness FM, rpm-tracking exhaust noise; idle loop rebuilt (88 Hz fundamental, firing-wobble AM, pitch drift) so it no longer drones like a generator.
+
 ## Verified
 - Desktop 1440x900 and mobile 390x844 flows: start → reveal → engine panel → headlight beam switch → tyres panel (firm highlight) → Index panel navigation (Cockpit via Index row) → footer marquee/badge/links; idle toggle class flip; caption strip appears while listening. Webpack compiles clean.
 - Round 3: headlight low/high ideas render final copy with no draft marker; fuel lines F-01–F-04 render; sat nav shows Why Wispr beats; digest agent row present in cockpit switch panel; lenis scrolled to footer on FOOTER click.
