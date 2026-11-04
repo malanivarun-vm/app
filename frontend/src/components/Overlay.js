@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useMotionValue, useSpring } from "framer-motion";
 import { useProgress } from "@react-three/drei";
 import { ChevronDown, List, Mic, Power, Volume2, VolumeX } from "lucide-react";
 
@@ -66,9 +66,24 @@ const lineV = {
 
 export function TitleBlock({ phase, openPanel }) {
   const show = phase === "igniting" || phase === "on";
+  const mx = useMotionValue(0);
+  const my = useMotionValue(0);
+  const sx = useSpring(mx, { stiffness: 60, damping: 22 });
+  const sy = useSpring(my, { stiffness: 60, damping: 22 });
+
+  useEffect(() => {
+    if (!window.matchMedia("(pointer: fine)").matches) return;
+    const onMove = (e) => {
+      mx.set((e.clientX / window.innerWidth - 0.5) * 12);
+      my.set((e.clientY / window.innerHeight - 0.5) * 7);
+    };
+    window.addEventListener("pointermove", onMove);
+    return () => window.removeEventListener("pointermove", onMove);
+  }, [mx, my]);
+
   return (
     <div className="hud" style={{ justifyContent: "flex-start" }}>
-      <div className="title-block" style={{ marginTop: "7vh" }}>
+      <motion.div className="title-block" style={{ marginTop: "7vh", x: sx, y: sy }}>
         <AnimatePresence>
           {show && (
             <>
@@ -101,7 +116,7 @@ export function TitleBlock({ phase, openPanel }) {
             </>
           )}
         </AnimatePresence>
-      </div>
+      </motion.div>
       {show && (
         <button className="index-btn clickable" data-testid="index-btn" onClick={() => openPanel("index")} aria-label="Open the index">
           <List size={13} />

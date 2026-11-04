@@ -5,6 +5,7 @@ import PanelHost from "./components/Panels";
 import { LoadingGate, TitleBlock, Hud } from "./components/Overlay";
 import FooterZone from "./components/Footer";
 import * as sound from "./lib/sound";
+import Lenis from "lenis";
 
 function useIsMobile() {
   const [m, setM] = useState(() => window.matchMedia("(max-width: 768px)").matches);
@@ -56,6 +57,21 @@ export default function App() {
     }, 30000);
     return () => clearTimeout(t);
   }, [modelLoaded]);
+
+  useEffect(() => {
+    if (reduced) return;
+    const lenis = new Lenis({ duration: 1.1, smoothWheel: true });
+    let raf;
+    const loop = (t) => {
+      lenis.raf(t);
+      raf = requestAnimationFrame(loop);
+    };
+    raf = requestAnimationFrame(loop);
+    return () => {
+      cancelAnimationFrame(raf);
+      lenis.destroy();
+    };
+  }, [reduced]);
 
   useEffect(() => {
     return () => {
@@ -200,7 +216,7 @@ export default function App() {
 
   return (
     <div className="app-root">
-      <div className="stage">
+      <div className="stage" data-lenis-prevent>
         {failed ? (
           <FallbackStage phase={phase} panel={panel} openPanel={openPanel} />
         ) : (

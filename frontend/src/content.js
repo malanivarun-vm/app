@@ -88,23 +88,23 @@ export const CONTENT = {
     lines: [
       {
         num: "F-01",
-        title: "Autonomy",
-        line: "Success is not just title or salary. It is work that creates freedom — for family, nature, learning, and a calmer way of living.",
+        title: "Machines that make people faster",
+        line: "\u201CI love machines which make people faster, and these machines are mostly driven by technology.\u201D",
       },
       {
         num: "F-02",
-        title: "Teams that run themselves",
-        line: "Most proud of building teams that run with minimal intervention: hire well, assign ownership clearly, keep feedback loops strong.",
+        title: "Driven by friction",
+        line: "The small everyday problems people quietly put up with. Operations showed how much time teams lost to clunky processes — and that pulled me into product: fix the cause, not just the symptoms.",
       },
       {
         num: "F-03",
-        title: "Learning fast when the problem is real",
-        line: "Automotive, staffing, SaaS, operations, pricing. Understand the incentives, find the friction, and stay curious longer than most.",
+        title: "I build my way out",
+        line: "When something annoys me, I build my way out. Drowning in 1,000 unread WhatsApp messages became a digest agent that reads my groups for me.",
       },
       {
         num: "F-04",
         title: "Cars. F1. Driving.",
-        line: "Machines built for feel, tuned for the last mile — the reason this portfolio looks like a garage.",
+        line: "The lens for all of it. Machines built for feel, tuned for the last mile — the reason this portfolio looks like a garage.",
       },
     ],
     note: "Motivation is fuel: it does nothing while it sits in the can. It only counts when it is burning in the engine above.",
@@ -198,39 +198,48 @@ export const CONTENT = {
         status: "PROTOTYPE",
         href: "https://prototype-smoky-ten.vercel.app",
       },
+      {
+        name: "WhatsApp Digest Agent",
+        line: "Reads my groups for me; built because drowning in 1,000 unread WhatsApp messages is no way to work.",
+        status: "PERSONAL BUILD",
+        href: null,
+      },
     ],
     note: "Mapping is a proposal — projects can be reshuffled across the dash. The rest of the case studies are one message away.",
   },
 
   headlights: {
     lede: "Growth ideas for Wispr Flow in India. Flip between low beam and high beam — each flip lights up the ideas one by one.",
-    draft: "DRAFT — PLACEHOLDER IDEAS, TO BE REPLACED WITH FINAL THINKING",
     low: [
       {
-        t: "Win the code-mix wedge",
-        l: "Indian speech is Hinglish. Lead demos and onboarding with code-mix accuracy, where keyboard-first tools fall over — zero new behaviour required.",
+        t: "Start with senior citizens",
+        l: "The cohort that struggles most with typing is the most comfortable speaking. Make Flow simple and easy for them, with affordable plans so they get hooked.",
       },
       {
-        t: "Builder and founder communities",
-        l: "Seed Flow through India's PM guilds, indie builders and D2C founders: dictation for shipping PRDs, docs and investor updates.",
+        t: "Meet them on WhatsApp and Facebook",
+        l: "Integrate with the apps this cohort already lives in, so a few early adopters spread it through word-of-mouth.",
       },
       {
-        t: "Ship where the typing is worst",
-        l: "Field ops, sales on the road, warehouse floors — carry Flow into India's ops-heavy SMBs, where typing during the work is not realistic.",
+        t: "Hindi and English first, then Hinglish",
+        l: "The majority of India speaks Hindi, English, or the Hinglish mix — nail those before anything else.",
+      },
+      {
+        t: "Then regional languages",
+        l: "Flow already covers some; improve where necessary, and launch so typing is no longer the bottleneck for India.",
       },
     ],
     high: [
       {
-        t: "Voice-native workflows, not just dictation",
-        l: "From transcribing speech to running actions — the Events OS thesis (voice as the primary input, zero new behaviour) as a product surface for India.",
+        t: "The default way India types",
+        l: "Real-time translation: dictate in one language, it types in another — bridging regions and ethnicities.",
       },
       {
-        t: "Regional depth as the moat",
-        l: "Accuracy in Indian languages and noisy, real-world audio — exactly where generalist tools degrade. The batching lessons from Events OS apply.",
+        t: "A voice for small business",
+        l: 'Talk to your data and generate invoices by speaking: "Generate an invoice for this person, of this amount — this is the item I\'ve supplied." An agent captures it all, and the conversation happens through Wispr Flow.',
       },
       {
-        t: "Enterprise and GCC playbook",
-        l: "Voice tooling for India's GCCs and operations-heavy industries, with admin controls and rollout discipline — the adoption playbook I already run.",
+        t: "Jarvis, fronted by Wispr Flow",
+        l: "An assistant living on your system, driven by voice commands through Flow — applications across design, prototyping and manufacturing, and in IT and AI where people already prompt by voice.",
       },
     ],
   },
@@ -245,8 +254,23 @@ export const CONTENT = {
       ["Voice-first, AI-native building", "Independent · now"],
     ],
     whyTitle: "Why Wispr",
-    why: "The best technology asks for zero new behaviour. Events OS made voice the primary input because the ground team already speaks — zero new behaviour was the requirement. Remi captures through Telegram because founders already live there. Wispr Flow is that thesis, done properly, at global scale.",
-    why2: "Point it at India, and I bring the playbook: enterprise rollout discipline, adoption instincts from ops-heavy businesses, and a bias for the last mile.",
+    whyBeats: [
+      {
+        num: "W-01",
+        t: "The bottleneck, gone",
+        l: "Typing carried a mental load: phrasing it in the mind, putting it into words, then rethinking and polishing until it sounded formal. Drafting emails and messages ate real mental bandwidth — Wispr removed that.",
+      },
+      {
+        num: "W-02",
+        t: "Speaking is the new normal",
+        l: "Thoughts flow freely now: texting friends, talking to AI agents, writing email. Anything that needed typing for medium- to long messages runs through Wispr Flow — and with dirty hands it is easier to talk it out and still get things done than to wait to wash up.",
+      },
+      {
+        num: "W-03",
+        t: "Novel, then natural",
+        l: "It has unblocked a hundred small issues. It seemed very novel at first; now it feels so natural I cannot imagine my day without it.",
+      },
+    ],
   },
 };
 

@@ -189,7 +189,6 @@ function HeadlightsBody({ d }) {
             HIGH BEAM · LONG TERM
           </button>
         </div>
-        <span className="draft-chip">{d.draft}</span>
       </motion.div>
       <AnimatePresence mode="wait">
         <motion.div key={beam} initial="hidden" animate="show" exit={{ opacity: 0, transition: { duration: 0.15 } }}>
@@ -227,13 +226,18 @@ function SatNavBody({ d }) {
           </li>
         ))}
       </motion.ul>
-      <motion.div className="block-card" custom={3} variants={itemV} initial="hidden" animate="show">
-        <div className="block-eyebrow">
-          <span>{d.whyTitle}</span>
-        </div>
-        <div className="block-line">{d.why}</div>
-        <div className="block-line" style={{ marginTop: 10 }}>{d.why2}</div>
+      <motion.div className="index-sec" custom={3} variants={itemV} initial="hidden" animate="show">
+        {d.whyTitle}
       </motion.div>
+      {d.whyBeats.map((b, i) => (
+        <motion.div className="block-card" key={i} custom={4 + i} variants={itemV} initial="hidden" animate="show">
+          <div className="block-eyebrow">
+            <span>{b.num}</span>
+          </div>
+          <div className="block-title">{b.t}</div>
+          <div className="block-line">{b.l}</div>
+        </motion.div>
+      ))}
     </>
   );
 }

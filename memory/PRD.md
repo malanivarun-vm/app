@@ -36,12 +36,19 @@ Build a single-page portfolio for Varun Malani, a product manager in Bangalore, 
 - Voice commands: press-to-talk mic pill, live recognised-words caption strip above the controls, forgiving keyword matching for the six sayings, "Start the engine" runs the full ignition then opens Engine; no-match and mic-error messages; mic hides itself on unsupported browsers; everything stays clickable.
 - Mobile title sizing verified at 390px (no clipping); desktop verified at 1440px.
 
+## Implemented (2026-11-04, round 3)
+- Final headlight ideas: 4 low-beam (senior citizens, WhatsApp/Facebook, Hindi+English then Hinglish, regional languages) and 3 high-beam (real-time translation, voice for small business, Jarvis fronted by Flow) — DRAFT chip removed.
+- Fuel tank in Varun's words: machines that make people faster, driven by friction, I build my way out, kept Cars/F1 line.
+- Sat Nav "Why Wispr" replaced with three first-person beats (the bottleneck gone, speaking is the new normal, novel then natural).
+- WhatsApp Digest Agent added to the cockpit switch panel (PERSONAL BUILD, no link).
+- Motion polish: lenis momentum scrolling with the 3D stage exempt (data-lenis-prevent, reduced-motion skips), footer scroll-reveal, pointer-driven title drift (fine pointers only).
+
 ## Verified
 - Desktop 1440x900 and mobile 390x844 flows: start → reveal → engine panel → headlight beam switch → tyres panel (firm highlight) → Index panel navigation (Cockpit via Index row) → footer marquee/badge/links; idle toggle class flip; caption strip appears while listening. Webpack compiles clean.
+- Round 3: headlight low/high ideas render final copy with no draft marker; fuel lines F-01–F-04 render; sat nav shows Why Wispr beats; digest agent row present in cockpit switch panel; lenis scrolled to footer on FOOTER click.
 - Voice recognition itself needs a real Chrome/Edge with mic permission (headless test environment can only verify the UI wiring, caption states and fallbacks).
 - Sound could not be verified audibly in this environment (no audio output); synthesis code follows standard Web Audio patterns.
 
 ## Backlog
-- P0: none — core is complete.
-- P1: Replace DRAFT headlight ideas and refine fuel-tank copy with Varun's final words; revisit title if wanted.
-- P2: Social share polish, performance tuning on low-end devices, OG image refinements, final sound-design pass.
+- P0: none — core is complete, copy is final.
+- P2: Performance tuning for low-end devices, social-share preview polish, OG image refresh, final sound-design pass, accessibility audit.

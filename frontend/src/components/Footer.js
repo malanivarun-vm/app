@@ -1,4 +1,5 @@
 import React from "react";
+import { motion } from "framer-motion";
 import { METRICS, PROFILE } from "../content";
 
 function VMBadge({ size = 62 }) {
@@ -18,7 +19,13 @@ function VMBadge({ size = 62 }) {
 
 export default function FooterZone() {
   return (
-    <div id="footer-zone">
+    <motion.div
+      id="footer-zone"
+      initial={{ opacity: 0, y: 26 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.15 }}
+      transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+    >
       <div className="marquee" data-testid="metrics-marquee" aria-label="Career metrics">
         <div className="mq-track">
           {[0, 1].map((copy) => (
@@ -81,6 +88,6 @@ export default function FooterZone() {
           <span>FULL THROTTLE · HYBRID SHOWROOM 01</span>
         </div>
       </footer>
-    </div>
+    </motion.div>
   );
 }
