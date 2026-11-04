@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useProgress } from "@react-three/drei";
-import { ChevronDown, Power, Volume2, VolumeX } from "lucide-react";
+import { ChevronDown, List, Mic, Power, Volume2, VolumeX } from "lucide-react";
 
 export function LoadingGate({ failed, phase, onStarted }) {
   const { progress, active } = useProgress();
@@ -64,11 +64,11 @@ const lineV = {
   }),
 };
 
-export function TitleBlock({ phase }) {
+export function TitleBlock({ phase, openPanel }) {
   const show = phase === "igniting" || phase === "on";
   return (
     <div className="hud" style={{ justifyContent: "flex-start" }}>
-      <div className="title-block" style={{ marginTop: "8vh" }}>
+      <div className="title-block" style={{ marginTop: "7vh" }}>
         <AnimatePresence>
           {show && (
             <>
@@ -85,12 +85,7 @@ export function TitleBlock({ phase }) {
               <h1 className="title-main" data-testid="hero-title">
                 <span className="title-line">
                   <motion.span custom={0} variants={lineV} initial="hidden" animate="show" style={{ display: "block" }}>
-                    FULL
-                  </motion.span>
-                </span>
-                <span className="title-line">
-                  <motion.span custom={1} variants={lineV} initial="hidden" animate="show" style={{ display: "block", color: "var(--red)" }}>
-                    THROTTLE
+                    FULL <span className="red">THROTTLE</span>
                   </motion.span>
                 </span>
               </h1>
@@ -101,13 +96,18 @@ export function TitleBlock({ phase }) {
                 transition={{ delay: 0.75, duration: 0.6 }}
                 exit={{ opacity: 0 }}
               >
-                Varun's journey through the lens of his passion. Every part of this car is a chapter — press the red
-                hotspots and look around.
+                Varun's journey through the lens of his passion
               </motion.p>
             </>
           )}
         </AnimatePresence>
       </div>
+      {show && (
+        <button className="index-btn clickable" data-testid="index-btn" onClick={() => openPanel("index")} aria-label="Open the index">
+          <List size={13} />
+          INDEX
+        </button>
+      )}
       <div className="corner-tag">
         SHOWROOM <b>01</b>
         <br />
@@ -119,8 +119,9 @@ export function TitleBlock({ phase }) {
   );
 }
 
-export function Hud({ phase, idleOn, onToggleIdle, onScrollDown }) {
+export function Hud({ phase, idleOn, onToggleIdle, onScrollDown, micSupported, listening, caption, onMic }) {
   const on = phase === "on";
+  const showHint = on && micSupported && !listening && !caption;
   return (
     <div className="hud" style={{ justifyContent: "flex-end" }}>
       <div className="hud-bottom">
@@ -129,7 +130,7 @@ export function Hud({ phase, idleOn, onToggleIdle, onScrollDown }) {
           <br />
           SCROLL TO ZOOM
           <br />
-          TAP THE RED HOTSPOTS
+          TAP A RED DOT
         </div>
         <button className="scroll-down clickable" data-testid="scroll-down-btn" onClick={onScrollDown}>
           FOOTER
@@ -137,16 +138,42 @@ export function Hud({ phase, idleOn, onToggleIdle, onScrollDown }) {
             <ChevronDown size={16} />
           </span>
         </button>
-        <button
-          className={`idle-toggle clickable ${idleOn ? "on" : ""}`}
-          data-testid="idle-toggle"
-          onClick={onToggleIdle}
-          style={{ opacity: on ? 1 : 0, pointerEvents: on ? "auto" : "none", transition: "opacity 0.5s" }}
-        >
-          <span className="dot" />
-          ENGINE IDLE
-          {idleOn ? <Volume2 size={13} /> : <VolumeX size={13} />}
-        </button>
+        <div className="ctrl-stack">
+          {caption && (
+            <div className={`caption-strip ${listening ? "listening" : ""}`} data-testid="voice-caption">
+              <span className="cap-dot" />
+              <span className="cap-text">{caption}</span>
+            </div>
+          )}
+          {showHint && (
+            <div className="voice-hint" data-testid="voice-hint">
+              GIVE IT A TRY — SAY “START THE ENGINE”
+            </div>
+          )}
+          <div className="ctrl-row">
+            {micSupported && (
+              <button
+                className={`mic-pill clickable ${listening ? "listening" : ""}`}
+                data-testid="mic-btn"
+                onClick={onMic}
+                aria-label={listening ? "Stop listening" : "Start voice command"}
+              >
+                <Mic size={13} />
+                {listening ? "LISTENING" : "VOICE"}
+              </button>
+            )}
+            <button
+              className={`idle-toggle clickable ${idleOn ? "on" : ""}`}
+              data-testid="idle-toggle"
+              onClick={onToggleIdle}
+              style={{ opacity: on ? 1 : 0, pointerEvents: on ? "auto" : "none", transition: "opacity 0.5s" }}
+            >
+              <span className="dot" />
+              ENGINE IDLE
+              {idleOn ? <Volume2 size={13} /> : <VolumeX size={13} />}
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   );

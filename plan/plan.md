@@ -1,54 +1,53 @@
-# Full Throttle — Varun Malani's Hybrid Hypercar Showroom Portfolio
+# Full Throttle — Index, Layout Fixes & Voice Commands
 
-A single-page portfolio that presents Varun Malani, a Bangalore product manager, as a hybrid hypercar on a spotlighted showroom platform. Visitors press "Start the engine", the car lights up under a garage spotlight, and every part of the car — engine, tyres, fuel tank, suspension, cockpit, headlights, sat nav — opens a sleek side panel telling one chapter of his career.
+A portfolio presented as a hybrid hypercar showroom in a dark garage. This round cleans up the on-screen text, gives every glowing dot a plain-language index, and teaches the car to answer to spoken commands.
+
+## What this round delivers
+
+The black label boxes around the car's hotspots overlap each other and crowd the layout. They go away entirely: the car keeps only plain glowing red dots. A new slide-in Index panel tells the reader what each dot covers, lists the six voice sayings, and the zoom/drag controls. The hero title becomes one line with a full-width subtitle so zooming into the car no longer hides the text. Voice commands arrive in the same pass: a mic button, the recognised words shown live on screen, and the six sayings wired to the car — everything still works by click everywhere.
 
 ## Who it's for
 
-Hiring managers, senior PM recruiters, and collaborators who should feel they are meeting a person, not reading a resume. Secondarily, the Wispr team, who should read the headlights and sat-nav panels as a working product mind showing up with ideas, not a cover letter.
+Hiring managers and recruiters meeting Varun through the car, who need one glance to understand what the dots mean. Secondarily, voice users on Chrome/Edge who can drive the tour hands-free; everyone else keeps full click and tap.
 
 ## Core features and experience
 
-1. **Cinematic entry sequence.** The page opens on a dark garage with a loading bar while the 3D model loads. A small pop-up says "Start the engine" — pressing it fires a short synthesized V12-style startup sound and rev, the spotlight snaps on, and the car is revealed on a slowly turning platform while the title reveals line by line.
-2. **Title.** "Full Throttle" as the display title with "Varun's journey through the lens of his passion" kept as the supporting line underneath, so the agreed framing survives inside the stronger headline.
-3. **Interactive 3D hero.** The provided GLB model, centred on a turntable. Drag to rotate, scroll/pinch to zoom. If the model file is large, it is Draco-compressed as part of the build. If the model fails to load, a side-view image of a dark hypercar appears with the same hotspots as labelled buttons, so the page never breaks.
-4. **Seven hotspot chapters**, each pinned to the car and opening a side panel. Hotspots track their part as the car rotates; if attachment proves unreliable, they degrade to labelled buttons arranged around the car (the guaranteed-working fallback):
-   - **The Engine** — the two motors: motor one is operations (margin turned from -6% to +3%, ₹50 Cr payouts at 99% accuracy, 5% margin growth); motor two is product (85% feature adoption, 30% faster go-lives, 8+ years in payroll/SaaS, now powering SMBs with AI).
-   - **The Tyres** — the ops-to-product journey where he meets the road: the four firms — Saint-Gobain, Mazda Motor Europe, Gurpreet Enterprises, Smartstaff — one tyre each.
-   - **Fuel Tank** — what drives him, drafted from his profile: autonomy, building teams that run themselves, learning fast in real problems, and a lifelong love of cars and F1.
-   - **Suspension** — adaptability, three pivot moments: engineer to techno-commercial at Saint-Gobain, the move to Germany and the winding path from ops to product at Smartstaff, and the current independent AI-building chapter.
-   - **Cockpit** — the driver's view where each project is a control: infotainment screen (Events OS), dashboard dials (Vitae), glove box (Remi), overhead light (Andiamo), plus switches for the Blinkit DSM Hub, YouTube 2.0, Lumi, Judgement and Don't Blink case studies.
-   - **Headlights** — growth ideas for Wispr Flow in India. The switch has low beam (short-term ideas) and high beam (long-term ideas); each flip reveals the next idea down the beam. Shipped as clearly-labelled drafts to be replaced with Varun's real ideas.
-   - **Sat Nav** — where he's headed next and why Wispr: the route to voice-first products that fit existing behaviour, drawn from his own Events OS and Remi theses.
-5. **Sound and controls.** An engine idle sound, off by default, with a visible toggle. Everything works by click and tap; no interaction requires a microphone in this phase.
-6. **Footer.** A "Built by voice with Wispr Flow" badge, LinkedIn (linkedin.com/in/malanivarun), email (malanivarun@gmail.com), and Bangalore, India. An original SVG badge — a VM monogram inside a tachometer arc — serves as logo and favicon.
-7. **Mobile.** Fully responsive with reduced effects: slower/simpler turntable, lighter particles, panels as full-width sheets, same content.
+1. **Plain red dots.** Every hotspot becomes a small pulsing red dot — no text on or around the car. Hovering a dot (desktop) brightens it; the open chapter's dot lights up white. Four dots remain on the wheels (the four firms). The Index is the single source of truth for what each dot means.
+2. **Index panel.** An "INDEX" button at the top of the screen opens the same slide-in panel the chapters use (right side on desktop, bottom sheet on mobile). Content: a row per chapter — 01 through 07, a red dot glyph, the name, and a one-line hint of what it covers (the tyres row names the four firms); below it a VOICE COMMANDS section quoting the six sayings and what each opens, with a note that the mic needs Chrome/Edge and everything works by click; plus the control hints (drag to rotate, scroll to zoom). Closes with X or Escape.
+3. **Title and subtitle fix.** "FULL THROTTLE" sets on a single line at every screen width (the condensed display face scales down fluidly on phones). The subtitle — "Varun's journey through the lens of his passion" — runs as one full-width line beneath it instead of a narrow column. A soft dark scrim behind the title block keeps the text readable when the zoomed-in car passes behind it; because the label boxes are gone, dots passing behind text no longer hide anything.
+4. **Voice commands.** A mic pill button sits with the other bottom controls, with a "Give it a try — say: start the engine" hint. Press to talk: the mic listens once, a live caption strip above the bottom controls shows the recognised words in real time, then the matching panel opens:
+   - "Start the engine" — if the engine hasn't been started: full ignition sequence, then the Engine panel opens; if already running: opens the Engine panel
+   - "Turn on the headlights" — Headlights panel (beams come on with it)
+   - "Show me the cockpit" — Cockpit panel
+   - "Let's see what drives you" — Fuel Tank panel
+   - "What's the suspension like?" — Suspension panel
+   - "Where are we going?" — Sat Nav panel
+   Matching is forgiving (keyword-based, so phrasing can vary). If nothing matches, the caption says so and suggests a saying. If the browser has no speech recognition, the mic button hides itself and nothing else changes.
+5. **Everything else unchanged.** The startup sound, idle toggle, panels, marquee, footer badge, fallback image and mobile reduction sets stay as they are. Headlight ideas and fuel copy remain clearly marked DRAFT until the final text arrives.
 
 ## User flow
 
-Open page → loading bar fills while the model loads → "Start the engine" pop-up → press it → startup sound + spotlight reveal + title animation → the car turns slowly under the spotlight → visitor drags to rotate, pinches/scrolls to zoom → glowing hotspots or labelled buttons invite a click → side panel slides in with that chapter → close, explore the next part → finish at the sat nav, badge and footer → contact via LinkedIn or email.
+Open → loading bar → "Start the engine" → title on one line, subtitle full width, car revealed under the spotlight with plain red dots → tap INDEX to learn what the dots cover and which sayings work → either tap a dot or press the mic and say "show me the cockpit" → the caption shows the recognised words and the panel slides in → close, explore the next chapter → end at the sat nav, badge and footer.
 
 ## UI/UX feel
 
-- **Art direction:** a private hypercar garage at night — near-black carbon surfaces, one hard spotlight cone with volumetric haze, deep racing-red accents used sparingly for glow, needles and active states. Film grain overlay. No Ferrari marks, names or logos anywhere in text; the car stands on its own shape.
-- **Type:** condensed display type for the big headlines (racing livery energy), a technical monospace for spec labels and hotspots, a clean humanist body face. Numbers always set as instrument readouts.
-- **Motion:** masked line-by-line title reveal on start; staggered panel content entrances; needle and gauge animations in the cockpit; one slow editorial marquee strip of career metrics (85% adoption · ₹50 Cr payouts · -6% → +3% margin · 30% faster go-lives); lenis smooth momentum scrolling; framer-motion scroll-reveals and micro-interactions throughout; the 3D hero itself is the parallax/3D moment. Reduced effect set on phones and for prefers-reduced-motion.
+The garage art direction is unchanged: near-black carbon, one hard spotlight, deep racing red for active states. The Index, mic button and caption strip speak the same language — mono technical labels, red accents, glassy dark surfaces, spring-panel motion. The caption strip behaves like an instrument readout, appearing only while listening or processing. Motion stays purposeful: masked title reveal (now one line), staggered panel entrances, slow marquee, pulsing dots.
 
 ## Implementation phases
 
-**Phase 1 — MVP (built now).** The full single page: loading bar, start-engine sequence with sound, 3D hero with drag/zoom and turntable, all seven hotspot chapters with panels and real profile content, draft Wispr headlight ideas labelled as drafts, cockpit project mapping, model-failure fallback image with hotspots, idle-sound toggle, marquee metrics strip, badge, footer, mobile-responsive with reduced effects, favicon/logo.
+**Phase 1 — built now.** Plain red dots replacing all label boxes; Index panel (chapter hints, voice sayings, controls); one-line title + full-width subtitle + legibility scrim; voice commands with press-to-talk mic, live recognised-words caption, forgiving matching, graceful hide on unsupported browsers; mobile and reduced-motion support; every action still clickable.
 
-**Phase 2 — Voice commands.** Web Speech API mic button with a "give it a try" hint, recognised words shown on screen, and the six sayings wired to actions ("Start the engine", "Turn on the headlights", "Show me the cockpit", "Let's see what drives you", "What's the suspension like?", "Where are we going?"). Full click fallback everywhere; graceful hide on unsupported browsers.
+**Phase 2 — next.** Replace the DRAFT headlight ideas and fuel-tank copy with the final drafts being written now; revisit the title wording if wanted.
 
-**Phase 3 — Content and polish pass.** Replace draft Wispr ideas and fuel copy with Varun's final words, revisit the title if wanted, tune sound design and performance, add social share preview for LinkedIn.
+**Phase 3 — later.** Performance tuning for low-end devices, social-share preview polish, and a final sound-design pass.
 
 ## Assumptions
 
-- Title reads "Full Throttle" with "Varun's journey through the lens of his passion" as the subtitle, per the answer given.
-- Headlight content ships as 3 labelled draft short-term and 3 draft long-term ideas for Wispr Flow in India, clearly marked for replacement; sat-nav "why Wispr" copy is drafted from his projects' voice-first and fit-existing-behaviour themes.
-- Fuel tank copy is drafted from the profile (autonomy, teams, learning fast, cars/F1) until he refines it.
-- The "four firms" for the tyres are Saint-Gobain, Mazda Motor Europe, Gurpreet Enterprises and Smartstaff; the cockpit mapping of projects to controls is a proposal he can reshuffle later.
-- Every number on the page comes exactly from his supplied profile and project files — nothing invented, no rounding.
-- Engine sounds are synthesized in the browser (Web Audio), so no copyrighted recordings and no audio downloads.
-- The car model is used as geometry only; no Ferrari wordmarks, badges or textures with brand logos are displayed.
-- Voice commands are deliberately deferred to Phase 2, as chosen; in Phase 1 everything is clickable.
-- No backend features are needed: content is compiled into the page, and contact happens via LinkedIn/email links.
+- Press-to-talk (tap mic, speak, it stops on its own) rather than always-listening — predictable and battery-friendly.
+- Voice input uses the browser's built-in speech recognition; nothing is sent anywhere by this site, and the mic appears only where the browser supports it (Chrome/Edge).
+- The Index button appears only after the engine has started, so the opening pop-up stays undisturbed.
+- Dots have no tooltips at all on the car; the Index panel carries all naming.
+- The four tyre dots stay four separate dots; the Index lists the firms beneath chapter 02.
+- Headlight ideas and fuel copy are not touched this round — they keep their DRAFT markers.
+- Page scrolling stays native; the page is one viewport tall plus a short footer, so no new scrolling dependency is added.
+- All sounds remain synthesized in the browser; no audio files.

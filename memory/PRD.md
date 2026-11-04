@@ -29,12 +29,19 @@ Build a single-page portfolio for Varun Malani, a product manager in Bangalore, 
 - FallbackStage: generated side-view hypercar image with labelled hotspot buttons (activates on model error or 30s timeout).
 - Metrics marquee, footer, badge/favicon, self-hosted fonts, grain overlay, reduced-motion + mobile reduction sets, data-testids throughout.
 
+## Implemented (2026-11-04, round 2)
+- Plain pulsing red dots on the car — all label boxes removed; Index panel is the naming source of truth.
+- INDEX button (appears after ignition) opening the shared slide-in panel: 7 chapter rows (tap to open) with hints, VOICE COMMANDS section quoting the six sayings, Chrome/Edge + click-fallback note, drag/scroll/tap control hints.
+- One-line "FULL THROTTLE" title at all widths + full-width subtitle + legibility scrim behind the title block.
+- Voice commands: press-to-talk mic pill, live recognised-words caption strip above the controls, forgiving keyword matching for the six sayings, "Start the engine" runs the full ignition then opens Engine; no-match and mic-error messages; mic hides itself on unsupported browsers; everything stays clickable.
+- Mobile title sizing verified at 390px (no clipping); desktop verified at 1440px.
+
 ## Verified
-- Desktop 1440x900 and mobile 390x844 flows: start → reveal → engine panel → headlight beam switch → tyres panel (firm highlight) → footer marquee/badge/links; idle toggle class flip. Webpack compiles clean.
+- Desktop 1440x900 and mobile 390x844 flows: start → reveal → engine panel → headlight beam switch → tyres panel (firm highlight) → Index panel navigation (Cockpit via Index row) → footer marquee/badge/links; idle toggle class flip; caption strip appears while listening. Webpack compiles clean.
+- Voice recognition itself needs a real Chrome/Edge with mic permission (headless test environment can only verify the UI wiring, caption states and fallbacks).
 - Sound could not be verified audibly in this environment (no audio output); synthesis code follows standard Web Audio patterns.
 
 ## Backlog
 - P0: none — core is complete.
-- P1: Voice commands (Phase 2): Web Speech API mic button, "give it a try" hint, recognised words on screen, six sayings wired to actions; graceful hide on unsupported browsers. Click fallback already exists.
 - P1: Replace DRAFT headlight ideas and refine fuel-tank copy with Varun's final words; revisit title if wanted.
-- P2: Social share polish, performance tuning on low-end devices, OG image refinements.
+- P2: Social share polish, performance tuning on low-end devices, OG image refinements, final sound-design pass.

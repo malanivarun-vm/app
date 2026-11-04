@@ -192,3 +192,9 @@ export function setIdle(on) {
     setTimeout(() => i.stop(), 650);
   }
 }
+
+export function unlock() {
+  try {
+    ac();
+  } catch (e) {}
+}

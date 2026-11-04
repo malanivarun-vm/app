@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { X } from "lucide-react";
-import { CHAPTER_META, CONTENT } from "../content";
+import { CHAPTER_META, CONTENT, INDEX_ROWS, VOICE_SAYINGS } from "../content";
 
 const itemV = {
   hidden: { opacity: 0, y: 16 },
@@ -238,6 +238,48 @@ function SatNavBody({ d }) {
   );
 }
 
+const INDEX_META = { num: "00", title: "Index", tag: "WHAT THE DOTS COVER · VOICE · CONTROLS" };
+
+function IndexBody({ openPanel }) {
+  return (
+    <>
+      <motion.p className="ch-lede" custom={0} variants={itemV} initial="hidden" animate="show">
+        Every red dot on the car is one chapter of the story. This is what each one covers — tap a row to open it.
+      </motion.p>
+      {INDEX_ROWS.map((r, i) => (
+        <motion.button
+          className="index-row"
+          key={r.chapter}
+          data-testid={`index-row-${r.chapter}`}
+          custom={1 + i}
+          variants={itemV}
+          initial="hidden"
+          animate="show"
+          onClick={() => openPanel(r.chapter)}
+        >
+          <span className="index-num">{r.num}</span>
+          <span className="index-dot" />
+          <span className="index-name">{r.name}</span>
+          <span className="index-hint">{r.hint}</span>
+        </motion.button>
+      ))}
+      <motion.div className="index-sec" custom={9} variants={itemV} initial="hidden" animate="show">
+        VOICE COMMANDS
+      </motion.div>
+      {VOICE_SAYINGS.map((v, i) => (
+        <motion.div className="voice-row" key={i} custom={10 + i} variants={itemV} initial="hidden" animate="show">
+          <span className="voice-saying">{v.saying}</span>
+          <span className="voice-opens">{v.opens}</span>
+        </motion.div>
+      ))}
+      <motion.p className="ch-note" custom={17} variants={itemV} initial="hidden" animate="show">
+        The mic works in Chrome and Edge. Everything on this page also works by click and tap — drag to rotate, scroll
+        to zoom, tap a red dot.
+      </motion.p>
+    </>
+  );
+}
+
 const BODIES = {
   engine: EngineBody,
   tyres: TyresBody,
@@ -246,10 +288,11 @@ const BODIES = {
   cockpit: CockpitBody,
   headlights: HeadlightsBody,
   satnav: SatNavBody,
+  index: IndexBody,
 };
 
-export default function PanelHost({ panel, onClose, isMobile }) {
-  const meta = panel ? CHAPTER_META[panel.chapter] : null;
+export default function PanelHost({ panel, onClose, isMobile, openPanel }) {
+  const meta = panel ? (panel.chapter === "index" ? INDEX_META : CHAPTER_META[panel.chapter]) : null;
 
   useEffect(() => {
     const onKey = (e) => {
@@ -285,7 +328,9 @@ export default function PanelHost({ panel, onClose, isMobile }) {
         >
           <div className="panel-head">
             <div>
-              <div className="panel-chapter">CHAPTER {meta.num} / 07</div>
+              <div className="panel-chapter">
+                {panel.chapter === "index" ? "SHOWROOM MENU" : `CHAPTER ${meta.num} / 07`}
+              </div>
               <div className="panel-title">{meta.title}</div>
               <div className="panel-tag">{meta.tag}</div>
             </div>
@@ -294,7 +339,7 @@ export default function PanelHost({ panel, onClose, isMobile }) {
             </button>
           </div>
           <div className="panel-body">
-            <Body d={CONTENT[panel.chapter]} firm={panel.firm} />
+            <Body d={CONTENT[panel.chapter]} firm={panel.firm} openPanel={openPanel} />
           </div>
         </motion.aside>
       )}

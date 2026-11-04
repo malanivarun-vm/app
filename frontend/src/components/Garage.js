@@ -103,7 +103,6 @@ function Hotspot({ h, phase, panel, openPanel, isMobile, colliderRef }) {
       >
         <span className="hs-core" />
         <span className="hs-pulse" />
-        <span className="hs-label">{h.label}</span>
       </button>
     </Html>
   );

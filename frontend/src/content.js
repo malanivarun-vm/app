@@ -271,3 +271,22 @@ export const HS_FALLBACK = [
   { id: "engine", label: "ENGINE", chapter: "engine", x: 90, y: 46 },
   { id: "tyre-rr", label: "TYRES · SMARTSTAFF", chapter: "tyres", firm: 3, x: 75, y: 80 },
 ];
+
+export const INDEX_ROWS = [
+  { num: "01", chapter: "engine", name: "The Engine", hint: "The two motors: operations wins and product thinking" },
+  { num: "02", chapter: "tyres", name: "The Tyres", hint: "Four firms under me: Saint-Gobain · Mazda Motor Europe · Gurpreet Enterprises · Smartstaff" },
+  { num: "03", chapter: "fuel", name: "The Fuel Tank", hint: "What drives me: autonomy, teams, learning fast, cars and F1" },
+  { num: "04", chapter: "suspension", name: "The Suspension", hint: "Three moments where I changed the setup" },
+  { num: "05", chapter: "cockpit", name: "The Cockpit", hint: "Projects as controls: Events OS, Vitae, Remi, Andiamo + the switch panel" },
+  { num: "06", chapter: "headlights", name: "The Headlights", hint: "Growth ideas for Wispr Flow in India — low beam and high beam" },
+  { num: "07", chapter: "satnav", name: "The Sat Nav", hint: "Where I'm headed next, and why Wispr" },
+];
+
+export const VOICE_SAYINGS = [
+  { saying: "“Start the engine”", opens: "ignition, then The Engine" },
+  { saying: "“Turn on the headlights”", opens: "The Headlights" },
+  { saying: "“Show me the cockpit”", opens: "The Cockpit" },
+  { saying: "“Let's see what drives you”", opens: "The Fuel Tank" },
+  { saying: "“What's the suspension like?”", opens: "The Suspension" },
+  { saying: "“Where are we going?”", opens: "The Sat Nav" },
+];
