@@ -1,0 +1,153 @@
+import React, { useEffect, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { useProgress } from "@react-three/drei";
+import { ChevronDown, Power, Volume2, VolumeX } from "lucide-react";
+
+export function LoadingGate({ failed, phase, onStarted }) {
+  const { progress, active } = useProgress();
+  const [minDone, setMinDone] = useState(false);
+
+  useEffect(() => {
+    const t = setTimeout(() => setMinDone(true), 1500);
+    return () => clearTimeout(t);
+  }, []);
+
+  const loaded = failed || (!active && progress >= 100);
+  const ready = loaded && minDone;
+
+  return (
+    <AnimatePresence>
+      {phase === "pre" && (
+        <motion.div
+          key="gate"
+          className="loading-wrap"
+          initial={{ opacity: 1 }}
+          exit={{ opacity: 0, transition: { duration: 0.4 } }}
+        >
+          {!ready ? (
+            <>
+              <div className="loading-label">HYBRID SHOWROOM · WARMING UP THE GARAGE</div>
+              <div className="loading-bar" data-testid="loading-bar">
+                <div className="loading-fill" style={{ width: `${failed ? 100 : Math.max(progress, 6)}%` }} />
+              </div>
+              <div className="loading-pct">{failed ? "FALLBACK READY" : `${Math.round(Math.max(progress, 6))}%`}</div>
+            </>
+          ) : (
+            <motion.div
+              className="start-wrap"
+              initial={{ opacity: 0, y: 18 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <div className="start-card" data-testid="start-popup">
+                <div className="start-eyebrow">HYBRID SHOWROOM · BANGALORE</div>
+                <div className="start-title">Start the engine</div>
+                <div className="start-sub">Sound on for the full experience.</div>
+                <button className="start-btn" data-testid="start-engine-btn" onClick={onStarted}>
+                  <Power size={15} />
+                  START THE ENGINE
+                </button>
+              </div>
+            </motion.div>
+          )}
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+}
+
+const lineV = {
+  hidden: { y: "112%" },
+  show: (i = 0) => ({
+    y: 0,
+    transition: { delay: 0.15 + i * 0.16, duration: 0.7, ease: [0.22, 1, 0.36, 1] },
+  }),
+};
+
+export function TitleBlock({ phase }) {
+  const show = phase === "igniting" || phase === "on";
+  return (
+    <div className="hud" style={{ justifyContent: "flex-start" }}>
+      <div className="title-block" style={{ marginTop: "8vh" }}>
+        <AnimatePresence>
+          {show && (
+            <>
+              <motion.div
+                key="eyebrow"
+                className="title-eyebrow"
+                initial={{ opacity: 0, y: -8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.1, duration: 0.5 }}
+                exit={{ opacity: 0 }}
+              >
+                VARUN MALANI · PRODUCT MANAGER · BANGALORE, INDIA
+              </motion.div>
+              <h1 className="title-main" data-testid="hero-title">
+                <span className="title-line">
+                  <motion.span custom={0} variants={lineV} initial="hidden" animate="show" style={{ display: "block" }}>
+                    FULL
+                  </motion.span>
+                </span>
+                <span className="title-line">
+                  <motion.span custom={1} variants={lineV} initial="hidden" animate="show" style={{ display: "block", color: "var(--red)" }}>
+                    THROTTLE
+                  </motion.span>
+                </span>
+              </h1>
+              <motion.p
+                className="title-sub"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.75, duration: 0.6 }}
+                exit={{ opacity: 0 }}
+              >
+                Varun's journey through the lens of his passion. Every part of this car is a chapter — press the red
+                hotspots and look around.
+              </motion.p>
+            </>
+          )}
+        </AnimatePresence>
+      </div>
+      <div className="corner-tag">
+        SHOWROOM <b>01</b>
+        <br />
+        HYBRID <b>POWERTRAIN</b>
+        <br />
+        BANGALORE, <b>IN</b>
+      </div>
+    </div>
+  );
+}
+
+export function Hud({ phase, idleOn, onToggleIdle, onScrollDown }) {
+  const on = phase === "on";
+  return (
+    <div className="hud" style={{ justifyContent: "flex-end" }}>
+      <div className="hud-bottom">
+        <div className="hint-line">
+          DRAG TO ROTATE
+          <br />
+          SCROLL TO ZOOM
+          <br />
+          TAP THE RED HOTSPOTS
+        </div>
+        <button className="scroll-down clickable" data-testid="scroll-down-btn" onClick={onScrollDown}>
+          FOOTER
+          <span className="chev">
+            <ChevronDown size={16} />
+          </span>
+        </button>
+        <button
+          className={`idle-toggle clickable ${idleOn ? "on" : ""}`}
+          data-testid="idle-toggle"
+          onClick={onToggleIdle}
+          style={{ opacity: on ? 1 : 0, pointerEvents: on ? "auto" : "none", transition: "opacity 0.5s" }}
+        >
+          <span className="dot" />
+          ENGINE IDLE
+          {idleOn ? <Volume2 size={13} /> : <VolumeX size={13} />}
+        </button>
+      </div>
+    </div>
+  );
+}

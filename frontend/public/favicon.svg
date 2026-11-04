@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <rect width="64" height="64" rx="12" fill="#08080a"/>
+  <path d="M13 41a19 19 0 0 1 38 0" fill="none" stroke="#2c2c31" stroke-width="3.5"/>
+  <path d="M13 41a19 19 0 0 1 38 0" fill="none" stroke="#e10600" stroke-width="3.5" stroke-dasharray="26 60" stroke-linecap="round"/>
+  <line x1="32" y1="41" x2="43.5" y2="27.5" stroke="#e10600" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="32" cy="41" r="3.2" fill="#e10600"/>
+  <text x="32" y="57" font-family="Arial, Helvetica, sans-serif" font-size="11.5" font-weight="900" fill="#f2efe9" text-anchor="middle" letter-spacing="1">VM</text>
+</svg>
