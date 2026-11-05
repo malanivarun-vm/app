@@ -35,11 +35,11 @@ function EngineBody({ d }) {
             <div className="motor-name">{m.name}</div>
             <div className="motor-title">{m.title}</div>
             <div className="motor-line">{m.line}</div>
-            <div style={{ marginTop: 10 }}>
+            <div className="spec-grid">
               {m.specs.map(([v, k], i) => (
                 <div className="spec-row" key={i}>
                   <span className="spec-key">{k}</span>
-                  <span className="spec-val" style={{ fontSize: 20 }}>{v}</span>
+                  <span className="spec-val">{v}</span>
                 </div>
               ))}
             </div>

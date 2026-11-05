@@ -7,6 +7,9 @@ import FooterZone from "./components/Footer";
 import * as sound from "./lib/sound";
 import Lenis from "lenis";
 
+// language for Chrome's on-device recogniser; packs ship per BCP 47 tag
+const LOCAL_LANG = "en-US";
+
 function useIsMobile() {
   const [m, setM] = useState(() => window.matchMedia("(max-width: 768px)").matches);
   useEffect(() => {
@@ -45,6 +48,8 @@ export default function App() {
 
   const recRef = useRef(null);
   const finalRef = useRef("");
+  const errorRef = useRef(false);
+  const maxListenTimer = useRef(null);
   const captionTimer = useRef(null);
   const phaseRef = useRef(phase);
   useEffect(() => {
@@ -161,41 +166,90 @@ export default function App() {
     scheduleClear();
   };
 
-  const startListening = () => {
+  // Chrome's on-device recogniser needs no network. Returns "available", "downloadable",
+  // "downloading", "unavailable", or "unsupported" when the browser has no on-device API.
+  const localStatus = async (SR) => {
+    if (typeof SR.available !== "function") return "unsupported";
+    try {
+      return await SR.available({ langs: [LOCAL_LANG], processLocally: true });
+    } catch (e) {
+      return "unsupported";
+    }
+  };
+
+  // Online recognition failed (Google's speech servers unreachable): switch to on-device.
+  const fallbackToLocal = async (SR) => {
+    if (captionTimer.current) clearTimeout(captionTimer.current);
+    const status = await localStatus(SR);
+    if (status === "available") {
+      startListening(true);
+      return;
+    }
+    if (status === "downloadable" || status === "downloading") {
+      setCaption("Online voice is blocked here — downloading Chrome's on-device voice pack (one time)…");
+      let ok = false;
+      try {
+        ok = await SR.install({ langs: [LOCAL_LANG], processLocally: true });
+      } catch (e) {}
+      setCaption(ok ? "Voice pack ready — tap the mic and speak" : "Voice pack download failed — use the Index instead");
+      scheduleClear();
+      return;
+    }
+    setCaption("Voice can't reach Chrome's speech service here — use the Index instead");
+    scheduleClear();
+  };
+
+  const startListening = (local = false) => {
     sound.unlock();
     const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
     const rec = new SR();
     recRef.current = rec;
     finalRef.current = "";
-    rec.lang = "en-IN";
+    errorRef.current = false;
+    if (local) rec.processLocally = true;
+    rec.lang = local ? LOCAL_LANG : "en-IN";
     rec.interimResults = true;
-    rec.continuous = false;
+    // continuous keeps Chrome listening through a short pause; we stop it ourselves on a final result
+    rec.continuous = true;
     rec.maxAlternatives = 1;
     rec.onresult = (e) => {
       let txt = "";
       for (let i = 0; i < e.results.length; i++) txt += e.results[i][0].transcript;
-      if (e.results[e.results.length - 1].isFinal) finalRef.current = txt;
+      // keep interim words too: Chrome can end without ever marking them final
+      finalRef.current = txt;
       setCaption(txt.trim() || "Listening…");
+      if (e.results[e.results.length - 1].isFinal) rec.stop();
     };
     rec.onerror = (e) => {
+      errorRef.current = true;
       setListening(false);
+      if (e.error === "network" && !local) {
+        fallbackToLocal(SR);
+        return;
+      }
       const msgs = {
         "not-allowed": "Mic blocked — allow microphone access and try again",
         "service-not-allowed": "Mic blocked — allow microphone access and try again",
         "no-speech": "No speech heard — tap the mic and try again",
         "audio-capture": "No microphone found on this device",
       };
-      setCaption(msgs[e.error] || "Voice error — try again");
+      setCaption(msgs[e.error] || `Voice error (${e.error}) — try again`);
       scheduleClear();
     };
     rec.onend = () => {
+      clearTimeout(maxListenTimer.current);
       setListening(false);
+      // onend always follows onerror; don't overwrite the real error with "Heard nothing"
+      if (errorRef.current) return;
       handleFinal(finalRef.current);
     };
     try {
       rec.start();
       setListening(true);
       setCaption("Listening…");
+      // continuous mode never ends on its own after speech, so cap the session
+      clearTimeout(maxListenTimer.current);
+      maxListenTimer.current = setTimeout(() => rec.stop(), 8000);
     } catch (e) {
       setListening(false);
     }
@@ -209,9 +263,14 @@ export default function App() {
     }
   };
 
-  const toggleMic = () => {
-    if (listening) stopListening();
-    else startListening();
+  const toggleMic = async () => {
+    if (listening) {
+      stopListening();
+      return;
+    }
+    // prefer on-device when its language pack is already installed
+    const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+    startListening((await localStatus(SR)) === "available");
   };
 
   return (
