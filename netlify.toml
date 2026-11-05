@@ -1,0 +1,19 @@
+# Full Throttle is a Create React App in frontend/. Publishing the repo root
+# 404s because there is no index.html there. These settings override the Netlify UI.
+# `publish` is relative to `base`, so the deployed folder is frontend/build.
+"$schema" = "https://open-api.netlify.com/netlify.schema.json"
+
+[build]
+  base = "frontend"
+  command = "yarn build"
+  publish = "build"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+# The showroom is one screen. This still serves index.html for any path that
+# is not a real file, so a refresh or a shared deep link does not 404.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
